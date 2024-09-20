@@ -33,7 +33,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: layer_zip
-        path: layer.zip
+        path: ./layer.zip
 
   plan:
     name: 'Terraform Plan'
