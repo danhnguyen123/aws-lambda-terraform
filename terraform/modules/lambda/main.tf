@@ -43,7 +43,7 @@ resource "aws_lambda_layer_version" "lambda_layer" {
   compatible_runtimes = ["python3.11"]
   s3_bucket = aws_s3_bucket.bucket.id
   s3_key = aws_s3_object.layer_zip.key
-  source_code_hash = aws_s3_object.layer_zip.checksum_sha256
+  # source_code_hash = aws_s3_object.layer_zip.checksum_sha256
   depends_on = [ aws_s3_object.layer_zip ]
 }
 
@@ -94,7 +94,7 @@ resource "aws_lambda_function" "lambda_function" {
     variables = var.env
   }
 
-  source_code_hash = aws_s3_object.src_zip.checksum_sha256
+  # source_code_hash = aws_s3_object.src_zip.checksum_sha256
 
   tags = {
     Managed = "Terraform"
