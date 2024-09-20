@@ -90,7 +90,7 @@ jobs:
         terraform validate
 
     - name: Download plan file
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v3
       with:
         name: planfile
         path: terraform
