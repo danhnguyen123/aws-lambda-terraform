@@ -9,6 +9,7 @@ module "transform-csv-s3-lambda" {
   env = {
     SERVICE_NAME = var.service_name
     LOG_LEVEL = var.log_level
+    SNS_ARN = module.sns-topic-subcription.sns_topic_arn
   }
 
 }
@@ -24,7 +25,7 @@ module "s3-trigger-lambda" {
 }
 
 ############# SNS ################
-module "sns-topic-supcription" {
+module "sns-topic-subcription" {
   source  = "./modules/sns"
   sns_topic_name = var.sns_topic_name
   sns_subcription_email = var.sns_subcription_email
