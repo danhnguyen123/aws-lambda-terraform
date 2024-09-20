@@ -1,1 +1,1 @@
-# AWWS Lambda Terraform
+# AWS Lambda Terraform
