@@ -1,6 +1,6 @@
 
 # install
-python3.11 -m venv venv
+virtualenv venv
 source venv/bin/activate
 pip install -r ./src/requirements.txt
 # package
