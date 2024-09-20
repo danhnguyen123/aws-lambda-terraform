@@ -59,7 +59,7 @@ jobs:
     - name: Terraform Plan
       run: |
         cd terraform
-        terraform plan -out planfile.tfplan -var-file ../environments/dev/terraform.tfvars.json
+        terraform plan -out planfile.tfplan -var-file ../environments/dev/variables.tfvars
 
     - name: Upload plan file
       uses: actions/upload-artifact@v3
