@@ -95,6 +95,12 @@ jobs:
         name: planfile
         path: terraform
 
+    - name: Download layer zip file
+      uses: actions/download-artifact@v3
+      with:
+        name: layer_zip
+        path: .
+
     - name: Terraform Apply
       run: |
         cd terraform
