@@ -30,7 +30,7 @@ jobs:
         ./scripts/create_layer_zip.sh
 
     - name: Upload layer zip file
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: layer_zip
         path: layer.zip
@@ -62,7 +62,7 @@ jobs:
         terraform plan -out planfile.tfplan -var-file ../environments/dev/terraform.tfvars.json
 
     - name: Upload plan file
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: planfile
         path: terraform/planfile.tfplan
