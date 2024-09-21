@@ -19,10 +19,6 @@ variable "image_uri" {
     type = string
 }
 
-variable "package_s3_key" {
-    type = string
-}
-
 variable "service_name" {
     type = string
 }

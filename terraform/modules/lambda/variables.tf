@@ -14,10 +14,6 @@ variable "image_uri" {
     type = string
 }
 
-variable "package_s3_key" {
-    type = string
-}
-
 variable "memory_size" {
     type = number
     default = 128

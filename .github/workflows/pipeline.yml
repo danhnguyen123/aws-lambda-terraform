@@ -18,6 +18,7 @@ on:
 
 jobs:
   build_and_push:
+    name: 'Build and Push image'
     runs-on: ubuntu-latest
     if: contains(github.ref, 'main')
     outputs:
@@ -79,7 +80,7 @@ jobs:
     - name: Terraform Plan
       env:
         TF_VAR_image_uri: ${{ needs.build_and_push.outputs.image_uri }}
-        TF_VAR_package_s3_key: ${{ needs.build_and_push.outputs.package_s3_key }}
+        # TF_VAR_package_s3_key: ${{ needs.build_and_push.outputs.package_s3_key }}
 
       run: |
         cd terraform
