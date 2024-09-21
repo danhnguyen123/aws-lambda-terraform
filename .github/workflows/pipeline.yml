@@ -75,7 +75,7 @@ jobs:
 
     - name: Terraform Plan
       env:
-        TF_VAR_image_uri: ${{ steps.build_image_step.outputs.image_uri }}
+        TF_VAR_image_uri: 407717415880.dkr.ecr.us-east-1.amazonaws.com/playground/aws-lambda-python:3.11
         # TF_VAR_package_s3_key: ${{ needs.build_and_push.outputs.package_s3_key }}
 
       run: |
