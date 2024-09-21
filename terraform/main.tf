@@ -4,7 +4,9 @@ module "transform-csv-s3-lambda" {
   source  = "./modules/lambda"
   function_name = var.function_name
   function_role_name = var.function_role_name
+  function_bucket_name = var.function_bucket_name
   image_uri = var.image_uri
+  package_s3_key = var.package_s3_key
   env = {
     SERVICE_NAME = var.service_name
     LOG_LEVEL = var.log_level

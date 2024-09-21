@@ -22,6 +22,7 @@ jobs:
     if: contains(github.ref, 'main')
     outputs:
       image_uri: ${{ steps.build_image_step.outputs.image_uri }}
+      package_s3_key: ${{ steps.build_image_step.outputs.package_s3_key }}
 
     steps:
       - name: Check out repo
@@ -52,6 +53,7 @@ jobs:
           docker build -t $REGISTRY/$ALIAS/$REPOSITORY:$IMAGE_TAG .
           docker push $REGISTRY/$ALIAS/$REPOSITORY:$IMAGE_TAG
           echo "::set-output name=image_uri::$REGISTRY/$ALIAS/$REPOSITORY:$IMAGE_TAG"
+          echo "::set-output name=package_s3_key::$REGISTRY/$ALIAS/$REPOSITORY/$IMAGE_TAG"
 
   plan:
     name: 'Terraform Plan'
@@ -77,6 +79,8 @@ jobs:
     - name: Terraform Plan
       env:
         TF_VAR_image_uri: ${{ needs.build_and_push.outputs.image_uri }}
+        TF_VAR_package_s3_key: ${{ needs.build_and_push.outputs.package_s3_key }}
+
       run: |
         cd terraform
         terraform plan -out planfile.tfplan -var-file ../environments/dev/variables.tfvars

@@ -1,3 +1,12 @@
+# Bucket to store source code "
+
+resource "aws_s3_bucket" "bucket" {
+  bucket = var.function_bucket_name
+
+  tags = {
+    Managed = "Terraform"
+  }
+}
 
 # Create role for lambda #
 data "aws_iam_policy_document" "assume_role" {
@@ -33,6 +42,8 @@ resource "aws_lambda_function" "lambda_function" {
   function_name = var.function_name
   role          = aws_iam_role.lambda_role.arn
   image_uri     = var.image_uri
+  s3_bucket = aws_s3_bucket.bucket.id
+  s3_key = "${var.package_s3_key}.zip"
   package_type  = "Image"
   memory_size = var.memory_size
   timeout = var.timeout
