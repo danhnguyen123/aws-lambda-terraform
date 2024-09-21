@@ -36,25 +36,21 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: Login to Amazon ECR Public
-        id: login-ecr-public
+      - name: Login to Amazon ECR Private
+        id: login-ecr-private
         uses: aws-actions/amazon-ecr-login@v2
-        with:
-          mask-password: 'true'
-          registry-type: public
 
       - name: Build, tag, and push docker image to Amazon ECR Public
         id: build_image_step
         env:
-          REGISTRY: ${{ steps.login-ecr-public.outputs.registry }}
-          ALIAS: ${{ secrets.AWS_ECR_ALIAS }}
-          REPOSITORY: playground/aws-lambda-python
+          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          REPOSITORY: playground
+          IMAGE: aws-lambda-python
           IMAGE_TAG: "3.11"
         run: |
-          docker build -t $REGISTRY/$ALIAS/$REPOSITORY:$IMAGE_TAG .
-          docker push $REGISTRY/$ALIAS/$REPOSITORY:$IMAGE_TAG
-          echo "::set-output name=image_uri::$REGISTRY/$ALIAS/$REPOSITORY:$IMAGE_TAG"
-          echo "::set-output name=package_s3_key::$REGISTRY/$ALIAS/$REPOSITORY/$IMAGE_TAG"
+          docker build -t $REGISTRY/$REPOSITORY/$IMAGE:$IMAGE_TAG .
+          docker push $REGISTRY/$REPOSITORY/$IMAGE:$IMAGE_TAG
+          echo "::set-output name=image_uri::$REGISTRY/$REPOSITORY/$IMAGE:$IMAGE_TAG"
 
   plan:
     name: 'Terraform Plan'
@@ -79,7 +75,7 @@ jobs:
 
     - name: Terraform Plan
       # env:
-        # TF_VAR_image_uri: ${{ needs.build_and_push.outputs.image_uri }}
+        TF_VAR_image_uri: ${{ needs.build_and_push.outputs.image_uri }}
         # TF_VAR_package_s3_key: ${{ needs.build_and_push.outputs.package_s3_key }}
 
       run: |
