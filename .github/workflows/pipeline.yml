@@ -45,13 +45,13 @@ jobs:
         id: build_image_step
         env:
           REGISTRY: ${{ steps.login-ecr-public.outputs.registry }}
-          NAMESPACE: playground
-          REPOSITORY: aws-lambda-python
+          ALIAS: ${{ secrets.AWS_ECR_ALIAS }}
+          REPOSITORY: playground/aws-lambda-python
           IMAGE_TAG: "3.11"
         run: |
-          docker build -t $REGISTRY/$NAMESPACE/$REPOSITORY:$IMAGE_TAG .
-          docker push $REGISTRY/$NAMESPACE/$REPOSITORY:$IMAGE_TAG
-          echo "::set-output name=image_uri::$REGISTRY/$NAMESPACE/$REPOSITORY:$IMAGE_TAG"
+          docker build -t $REGISTRY/$ALIAS/$REPOSITORY:$IMAGE_TAG .
+          docker push $REGISTRY/$ALIAS/$REPOSITORY:$IMAGE_TAG
+          echo "::set-output name=image_uri::$REGISTRY/$ALIAS/$REPOSITORY:$IMAGE_TAG"
 
   plan:
     name: 'Terraform Plan'
@@ -130,5 +130,6 @@ env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}  
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}  
   AWS_REGION: ${{ secrets.AWS_REGION }}
+  AWS_ECR_ALIAS: ${{ secrets.AWS_ECR_ALIAS }}
 
 
