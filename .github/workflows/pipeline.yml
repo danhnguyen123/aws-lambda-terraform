@@ -43,7 +43,7 @@ jobs:
       - name: Build, tag, and push docker image to Amazon ECR Public
         id: build_image_step
         env:
-          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          REGISTRY: ${{ steps.login-ecr-private.outputs.registry }}
           REPOSITORY: playground
           IMAGE: aws-lambda-python
           IMAGE_TAG: "3.11"
