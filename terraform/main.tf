@@ -11,6 +11,7 @@ module "transform-csv-s3-lambda" {
     LOG_LEVEL = var.log_level
     SNS_ARN = module.sns-topic-subcription.sns_topic_arn
   }
+  depends_on = [ module.sns-topic-subcription ]
 
 }
 
@@ -29,5 +30,4 @@ module "sns-topic-subcription" {
   source  = "./modules/sns"
   sns_topic_name = var.sns_topic_name
   sns_subcription_email = var.sns_subcription_email
-  depends_on = [ module.transform-csv-s3-lambda ]
 }
