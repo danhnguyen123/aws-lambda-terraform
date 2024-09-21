@@ -17,37 +17,46 @@ on:
           - 'False'
 
 jobs:
-  build:
-    name: 'Build Artifact'
+  build_and_push:
     runs-on: ubuntu-latest
+    if: contains(github.ref, 'main')
+    outputs:
+      image_uri: ${{ steps.build_image_step.outputs.image_uri }}
+
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Check out repo
+        uses: actions/checkout@v3
 
-    - name: Set up Python 3.11
-      uses: actions/setup-python@v5
-      with:
-        python-version: "3.11"
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
 
-    - name: Install dependencies
-      run: |
-        python3.11 -m pip install virtualenv
+      - name: Login to Amazon ECR Public
+        id: login-ecr-public
+        uses: aws-actions/amazon-ecr-login@v1
+        with:
+          mask-password: 'true'
+          registry-type: public
 
-    - name: Create layer zip file
-      run: |
-        chmod +x ./scripts/create_layer_zip.sh
-        ./scripts/create_layer_zip.sh
-
-    - name: Upload layer zip file
-      uses: actions/upload-artifact@v3
-      with:
-        name: layer_zip
-        path: ./layer.zip
+      - name: Build, tag, and push docker image to Amazon ECR Public
+        id: build_image_step
+        env:
+          REGISTRY: ${{ steps.login-ecr-public.outputs.registry }}
+          NAMESPACE: playground
+          REPOSITORY: aws-lambda-python
+          IMAGE_TAG: "3.11"
+        run: |
+          docker build -t $REGISTRY/$NAMESPACE/$REPOSITORY:$IMAGE_TAG .
+          docker push $REGISTRY/$NAMESPACE/$REPOSITORY:$IMAGE_TAG
+          echo "::set-output name=image_uri::$REGISTRY/$NAMESPACE/$REPOSITORY:$IMAGE_TAG"
 
   plan:
     name: 'Terraform Plan'
     runs-on: ubuntu-latest
-    needs: build
+    needs: build_and_push
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
@@ -66,6 +75,8 @@ jobs:
         terraform validate
 
     - name: Terraform Plan
+      env:
+        TF_image_uri: ${{ needs.build_and_push.outputs.image_uri }}
       run: |
         cd terraform
         terraform plan -out planfile.tfplan -var-file ../environments/dev/variables.tfvars
@@ -118,3 +129,6 @@ jobs:
 env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}  
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}  
+  AWS_DEFAULT_REGION: us-east-1
+
+

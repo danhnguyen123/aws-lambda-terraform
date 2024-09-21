@@ -6,17 +6,8 @@ variable "function_role_name" {
     type = string
 }
 
-variable "function_bucket_name" {
+variable "image_uri" {
     type = string
-}
-
-variable "layer_name" {
-    type = string
-}
-
-variable "runtime" {
-    type = string
-    default = "python3.11"
 }
 
 variable "memory_size" {

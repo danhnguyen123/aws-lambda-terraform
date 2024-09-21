@@ -11,11 +11,7 @@ variable "function_role_name" {
     type = string
 }
 
-variable "function_bucket_name" {
-    type = string
-}
-
-variable "layer_name" {
+variable "image_uri" {
     type = string
 }
 
