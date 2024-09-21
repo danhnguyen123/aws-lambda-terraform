@@ -76,7 +76,7 @@ jobs:
 
     - name: Terraform Plan
       env:
-        TF_image_uri: ${{ needs.build_and_push.outputs.image_uri }}
+        TF_image_uri: ${{ steps.build_image_step.outputs.image_uri }}
       run: |
         cd terraform
         terraform plan -out planfile.tfplan -var-file ../environments/dev/variables.tfvars
