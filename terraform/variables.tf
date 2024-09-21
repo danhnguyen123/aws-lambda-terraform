@@ -17,6 +17,7 @@ variable "function_role_name" {
 
 variable "image_uri" {
     type = string
+    default = "unknow"
 }
 
 variable "service_name" {
