@@ -74,7 +74,7 @@ jobs:
         terraform validate
 
     - name: Terraform Plan
-      # env:
+      env:
         TF_VAR_image_uri: ${{ needs.build_and_push.outputs.image_uri }}
         # TF_VAR_package_s3_key: ${{ needs.build_and_push.outputs.package_s3_key }}
 
