@@ -5,16 +5,16 @@ on:
     branches:
       - main
 
-  workflow_dispatch:
-    inputs:
-      runApply:
-        description: 'Run Terraform Apply? (True/False)' 
-        required: true
-        type: choice
-        default: 'False'
-        options:
-          - 'True'
-          - 'False'
+  # workflow_dispatch:
+  #   inputs:
+  #     runApply:
+  #       description: 'Run Terraform Apply? (True/False)' 
+  #       required: true
+  #       type: choice
+  #       default: 'False'
+  #       options:
+  #         - 'True'
+  #         - 'False'
 
 jobs:
   build_and_push:
@@ -114,12 +114,6 @@ jobs:
       with:
         name: planfile
         path: terraform
-
-    - name: Download layer zip file
-      uses: actions/download-artifact@v3
-      with:
-        name: layer_zip
-        path: .
 
     - name: Terraform Apply
       run: |
