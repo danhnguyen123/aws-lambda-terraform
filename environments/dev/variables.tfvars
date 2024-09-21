@@ -1,5 +1,6 @@
 function_name="transform-csv-s3-lambda-dev"
 function_role_name="transform-csv-s3-lambda-role-dev"
+image_uri="public.ecr.aws/n6n0c8b5/playground/aws-lambda-python:3.11"
 function_bucket_name="transform-csv-s3-lambda-bucker-dev"
 service_name="transform-csv-s3-lambda"
 log_level="DEBUG"
