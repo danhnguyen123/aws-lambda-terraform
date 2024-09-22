@@ -94,6 +94,15 @@ resource "aws_iam_policy" "custom_policy" {
             "${var.s3_source_bucket_arn}/*",
             "${var.s3_source_bucket_arn}"
           ]
+        },
+        {
+          "Effect": "Allow",
+          "Action": [
+            "glue:*"
+          ],
+          "Resource": [
+            "*"
+          ]
         }
     ]
   }
