@@ -48,3 +48,7 @@ variable "sns_topic_name" {
 variable "sns_subcription_email" {
     type = string
 }
+
+variable "aws_managed_sdk_pandas_layer_arn" {
+    type = string
+}

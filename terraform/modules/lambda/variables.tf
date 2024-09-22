@@ -34,3 +34,7 @@ variable "env" {
     description = "(Optional) Environment variables."
     default = {}
 }
+
+variable "aws_managed_sdk_pandas_layer_arn" {
+    type = string
+}

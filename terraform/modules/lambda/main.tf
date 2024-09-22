@@ -84,7 +84,7 @@ resource "aws_lambda_function" "lambda_function" {
   s3_key = aws_s3_object.src_zip.key
   handler       = "main.main"
 
-  layers = [ aws_lambda_layer_version.lambda_layer.arn ]
+  layers = [ aws_lambda_layer_version.lambda_layer.arn, var.aws_managed_sdk_pandas_layer_arn ]
 
   runtime = var.runtime
   memory_size = var.memory_size

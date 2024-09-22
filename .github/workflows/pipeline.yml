@@ -78,7 +78,7 @@ jobs:
 
   apply:
     name: 'Terraform Apply'
-    if: github.event.inputs.runApply == 'True'
+    # if: github.event.inputs.runApply == 'True'
     needs: plan
     runs-on: ubuntu-latest
     steps:

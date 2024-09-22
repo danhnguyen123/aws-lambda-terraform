@@ -6,6 +6,7 @@ module "transform-csv-s3-lambda" {
   function_role_name = var.function_role_name
   function_bucket_name  = var.function_bucket_name
   layer_name = var.layer_name
+  aws_managed_sdk_pandas_layer_arn = var.aws_managed_sdk_pandas_layer_arn
   env = {
     SERVICE_NAME = var.service_name
     LOG_LEVEL = var.log_level
