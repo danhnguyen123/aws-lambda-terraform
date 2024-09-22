@@ -1,0 +1,7 @@
+version: 2
+
+sources:
+  - name: argisung_basedata_staging
+    database: lakehouse_iceberg_stg
+    tables:
+      - name: retail_invoice

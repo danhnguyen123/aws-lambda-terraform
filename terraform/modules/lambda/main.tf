@@ -15,10 +15,10 @@ resource "aws_s3_bucket" "bucket" {
 # Zip source code and upload to s3 bucket #
 
 data "archive_file" "source" {
-    type = "zip"
-    # excludes    = split("\n", file("${path.root}/../src/.funcignore"))
-    source_dir = "${path.root}/../src" # Directory where your Python source code is
+    type        = "zip"
+    source_dir  = "${path.root}/.."
     output_path = "${path.root}/src-${var.function_name}-${local.timestamp}.zip"
+    excludes    = ["terraform", ".git", ".github", "layer.zip"]
 }
 
 resource "aws_s3_object" "src_zip" {
