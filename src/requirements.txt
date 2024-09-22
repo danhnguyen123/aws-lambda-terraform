@@ -1,2 +1,2 @@
 requests
-# awswrangler ## already install by using lambda layer
+# awswrangler ## already installed by using aws managed lambda layer to reduce lambda layer under 250MB (it's large libary)
