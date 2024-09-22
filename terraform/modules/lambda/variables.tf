@@ -26,7 +26,7 @@ variable "memory_size" {
 
 variable "timeout" {
     type = number
-    default = 600
+    default = 900  # max execution time is 15 minutes
 }
 
 variable "env" {
