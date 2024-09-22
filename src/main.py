@@ -50,7 +50,9 @@ def main(event, context):
                 'optimize_rewrite_data_file_threshold': '10',
                 'optimize_rewrite_delete_file_threshold': '10'
                 },
-            schema_evolution=True 
+            schema_evolution=True,
+            keep_files=False,
+            temp_path=f"s3://{bucket}/{database}/temp/"
         )
         logger.debug("End execution")
     except Exception as e:
