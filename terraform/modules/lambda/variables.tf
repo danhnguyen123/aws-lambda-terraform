@@ -42,7 +42,3 @@ variable "aws_managed_sdk_pandas_layer_arn" {
 variable "sns_topic_arn" {
     type = string
 }
-
-variable "s3_source_bucket_arn" {
-    type = string
-}
