@@ -38,3 +38,7 @@ variable "env" {
 variable "aws_managed_sdk_pandas_layer_arn" {
     type = string
 }
+
+variable "sns_topic_arn" {
+    type = string
+}

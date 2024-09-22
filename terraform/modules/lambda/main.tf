@@ -69,6 +69,33 @@ resource "aws_iam_role" "lambda_role" {
   }
 }
 
+# Create inline custom policy and attach to Lambda role
+resource "aws_iam_policy" "custom_policy" {
+  name        = "${var.function_name}-policy"
+  description = "Custom policy for ${var.function_name} Lambda"
+  policy = jsonencode({
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "sns:Publish"
+            ],
+            "Resource": [
+                "${var.sns_topic_arn}"
+            ]
+        }
+    ]
+  }
+  )
+}
+
+resource "aws_iam_role_policy_attachment" "custom_policy_attach" {
+  role       = aws_iam_role.lambda_role.name
+  policy_arn = aws_iam_policy.custom_policy.arn
+}
+
+
 # Attach AWSLambdaBasicExecutionRole policy to Lambda role
 resource "aws_iam_role_policy_attachment" "lambda_basic_execution" {
   role       = aws_iam_role.lambda_role.name
