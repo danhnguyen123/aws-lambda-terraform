@@ -16,7 +16,7 @@ resource "aws_s3_bucket" "bucket" {
 
 data "archive_file" "source" {
     type = "zip"
-    excludes    = split("\n", file("${path.root}/../src/.funcignore"))
+    # excludes    = split("\n", file("${path.root}/../src/.funcignore"))
     source_dir = "${path.root}/../src" # Directory where your Python source code is
     output_path = "${path.root}/src-${var.function_name}-${local.timestamp}.zip"
 }
