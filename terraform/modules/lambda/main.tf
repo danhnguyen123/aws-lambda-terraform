@@ -77,13 +77,22 @@ resource "aws_iam_policy" "custom_policy" {
     "Version": "2012-10-17",
     "Statement": [
         {
-            "Effect": "Allow",
-            "Action": [
-                "sns:Publish"
-            ],
-            "Resource": [
-                "${var.sns_topic_arn}"
-            ]
+          "Effect": "Allow",
+          "Action": [
+              "sns:Publish"
+          ],
+          "Resource": [
+              "${var.sns_topic_arn}"
+          ]
+        },
+        {
+          "Effect": "Allow",
+          "Action": [
+            "s3:*"
+          ],
+          "Resource": [
+            "${var.s3_source_bucket_arn}"
+          ]
         }
     ]
   }

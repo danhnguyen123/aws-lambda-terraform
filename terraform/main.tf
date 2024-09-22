@@ -1,3 +1,6 @@
+data "aws_s3_bucket" "source_bucket" {
+  bucket = var.source_bucket_name
+}
 
 ############# Lambda Function ################
 module "transform-csv-s3-lambda" {
@@ -8,6 +11,7 @@ module "transform-csv-s3-lambda" {
   layer_name = var.layer_name
   aws_managed_sdk_pandas_layer_arn = var.aws_managed_sdk_pandas_layer_arn
   sns_topic_arn = module.sns-topic-subcription.sns_topic_arn
+  s3_source_bucket_arn = data.aws_s3_bucket.source_bucket.arn
   env = {
     SERVICE_NAME = var.service_name
     LOG_LEVEL = var.log_level
