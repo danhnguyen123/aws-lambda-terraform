@@ -103,6 +103,15 @@ resource "aws_iam_policy" "custom_policy" {
           "Resource": [
             "*"
           ]
+        },
+        {
+          "Effect": "Allow",
+          "Action": [
+            "athena:*"
+          ],
+          "Resource": [
+            "*"
+          ]
         }
     ]
   }
