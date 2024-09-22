@@ -16,8 +16,9 @@ def main(event, context):
         bucket = event_record.get("s3").get("bucket").get("name")
         key = event_record.get("s3").get("object").get("key")
         s3_file_path = f"s3://{bucket}/{key}"
-        logger.debug("Read & transform data from S3")
+        logger.debug("Read data from S3")
         df = wr.s3.read_csv([s3_file_path])
+        logger.debug("Trasform data")
         df["InvoiceDateTime"] = df["InvoiceDate"].map(lambda x: datetime.strptime(x, "%Y-%m-%d %H:%M:%S"))
         df["InvoiceDate"] = df["InvoiceDate"].map(lambda x: x.split(" ")[0])
         rename_columns= {
@@ -39,6 +40,7 @@ def main(event, context):
 
         logger.debug("Create database if it doesn'n exist")
         wr.catalog.create_database(name=database, description="Lakehouse Iceberg staging for dev/test",exist_ok=True)
+        logger.debug("Write data to iceberg Athena table")
         wr.athena.to_iceberg(
             df=df,
             database=database,
@@ -56,6 +58,6 @@ def main(event, context):
         )
         logger.debug("End execution")
     except Exception as e:
-        logger.error(e)
-        message = f"Input S3 File {s3_file_path} processing is Failed !!"
+        logger.exception(e)
+        message = f"Input S3 File {s3_file_path} processing is Failed !!\nError {e}"
         respone = sns_client.publish(Subject="FAILED - Daily Data Processing", TargetArn=config.SNS_ARN, Message=message, MessageStructure='text')
