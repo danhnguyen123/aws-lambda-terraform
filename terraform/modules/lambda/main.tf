@@ -91,6 +91,7 @@ resource "aws_iam_policy" "custom_policy" {
             "s3:*"
           ],
           "Resource": [
+            "${var.s3_source_bucket_arn}/*",
             "${var.s3_source_bucket_arn}"
           ]
         }
