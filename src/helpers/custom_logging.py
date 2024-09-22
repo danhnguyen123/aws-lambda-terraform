@@ -2,7 +2,7 @@
 Purpose: Define logger for logging
 """
 import logging
-from config import config
+from helpers.config import config
 
 log_level_map = {
     "debug": logging.DEBUG,
