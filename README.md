@@ -51,7 +51,7 @@ This function will transform csv file in S3 ([sample csv](./assets/retail_data.c
 
 ### Terraform structure
 
-We will provisioning some AWS resources (we also put Terraform file in separated module folder for each resources):
+We will provisioning some AWS resources by using (Terraform)[https://developer.hashicorp.com/terraform/tutorials/aws-get-started], we also put Terraform file in separated module folder for each resources:
 
 * [Lambda](./terraform/modules/lambda): Provisioning Lambda Function and some resources for it
 * [S3 Notification](./terraform/modules/s3_notification): Provisioning S3 notification so after file was created in S3, a event will be fired and it contains metadata about this file and then Lambda will be triggered by this event
