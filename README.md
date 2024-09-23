@@ -34,6 +34,8 @@ In this project we have two main folder: `src` for Python code and `terraform` f
 
 In this repo we will use Python 3.11 ([AWS Function Python config](./terraform/modules/lambda/main.tf#L143))
 
+This function will transform csv file in S3 ([sample csv](./assets/retail_data.csv)) and write data to Iceberg table in Athena 
+
 `src` folder structure:
 
 ```bash
