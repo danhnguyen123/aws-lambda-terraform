@@ -57,11 +57,11 @@ We will provisioning some AWS resources by using [Terraform](https://developer.h
 
 * [Lambda](./terraform/modules/lambda): Provisioning Lambda Function and some resources for it
 * [S3 Notification](./terraform/modules/s3_notification): Provisioning S3 notification so after file was created in S3, a event will be fired and it contains metadata about this file and then Lambda will be triggered by this event
-* [Simple Notification Service](./terraform/modules/sns): SNS topic and [email](./environments/variables.tfvar#L10) subcription for failed processing 
+* [Simple Notification Service](./terraform/modules/sns): SNS topic and [email](./environments/dev/variables.tfvar#L10) subcription for failed processing 
 
 ```bash
 └── 
-    environments
+    environments/dev
     │   ├── backend.tfvars          # Terafrom backend config (Resource group -> Storage Account -> container)
     │   └── terraform.tfvars.json   # Terafrom values for variables
     terraform
@@ -98,7 +98,7 @@ Second, you need to grant AdministratorAccess permission for this User so Terraf
 
 ### Deploy AWS SDK for Pandas
 
-This Lambda function uses [AWS SDK for Pandas](https://aws-sdk-pandas.readthedocs.io/en/stable/) library as layer, but this library is a large package and exceeds 250MB limit of layer if we put `awswrangler` into [requirements.txt](./src/requirements.txt) to create layer so you need to pre-deployed this [application](https://serverlessrepo.aws.amazon.com/applications/us-east-1/336392948345/aws-sdk-pandas-layer-py3-11) into Lambda layer because Terraform doesn't support for this deployment. Then you retrieve ARN of the layer and replace this [variable](./environments/variables.tfvar#L11) with the ARN of layer
+This Lambda function uses [AWS SDK for Pandas](https://aws-sdk-pandas.readthedocs.io/en/stable/) library as layer, but this library is a large package and exceeds 250MB limit of layer if we put `awswrangler` into [requirements.txt](./src/requirements.txt) to create layer so you need to pre-deployed this [application](https://serverlessrepo.aws.amazon.com/applications/us-east-1/336392948345/aws-sdk-pandas-layer-py3-11) into Lambda layer because Terraform doesn't support for this deployment. Then you retrieve ARN of the layer and replace this [variable](./environments/dev/variables.tfvar#L11) with the ARN of layer
 
 ### Configuring credentials in Terraform
 
@@ -114,14 +114,14 @@ export AWS_SECRET_ACCESS_KEY="00000000-0000-0000-0000-000000000000"
 We will run Terraform command to create resources in AWS
  
 ### Terraform Init
-Initialize Terrafrorm AWS Provider and Module, we will use S3 to act as backend which storage Terraform state file, this [backend config](./environments/backend.tfvars)
+Initialize Terrafrorm AWS Provider and Module, we will use S3 to act as backend which storage Terraform state file, this [backend config](./environments/dev/backend.tfvars)
 
 ```bash
 cd terraform
 ```
 
 ```bash
-terraform init -backend-config ../environments/backend.tfvars
+terraform init -backend-config ../environments/dev/backend.tfvars
 ```
 
 ### Terraform Validate
@@ -134,10 +134,10 @@ terraform validate
 
 ### Terraform Plan
 
-Plan resouces which will create by Terraform, we storage Terraform variable config in this [file](./environments/variables.tfvars) and export `planfile.tfplan` file
+Plan resouces which will create by Terraform, we storage Terraform variable config in this [file](./environments/dev/variables.tfvars) and export `planfile.tfplan` file
 
 ```bash
-terraform plan -out planfile.tfplan -var-file ../environments/variables.tfvars
+terraform plan -out planfile.tfplan -var-file ../environments/dev/variables.tfvars
 ```
 
 ### Terraform Apply
