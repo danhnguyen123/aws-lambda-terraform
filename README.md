@@ -34,6 +34,8 @@ In this project we have two main folder: `src` for Python code and `terraform` f
 
 In this repo we will use Python 3.11 ([AWS Function Python config](./terraform/modules/lambda/main.tf#L143))
 
+Lambda has pre-installed Python labrary like boto3,.. If you need to install other library, you need to create layer and attach it to Lambda. In this repo, we will put light library into [requirements.txt](./src/requirements.txt) and create layer zip file by this script (you need to make sure this zip file doesnot exceed 250MB when extracting) and then create & attach layer to Lambda by Terrafrom. For large library like awswrangler or Machine Learning library, you can install AWS managed layer from [application](https://serverlessrepo.aws.amazon.com/applications) and then attach to Lambda
+
 This function will transform csv file in S3 ([sample csv](./assets/retail_data.csv)) and write data to Iceberg table in Athena 
 
 `src` folder structure:
