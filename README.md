@@ -11,7 +11,7 @@ Project to spin up AWS services by following this flow:
   - [Setup](#setup)
     - [Creating & Configuring User for Terraform deployment in the AWS IAM](#create-user)
     - [Deploy AWS SDK for Pandas](#cdeploy-aws-sdk-pandas)
-    - [Configuring credentails in Terraform](#config-credentails-in-terraform)
+    - [Configuring credentials in Terraform](#config-credentials-in-terraform)
   - [Provision](#provision)
     - [Terraform Init](#terraform-init)
     - [Terraform Validate](#terraform-validate)
@@ -97,7 +97,7 @@ Second, you need to grant AdministratorAccess permission for this User so Terraf
 This Lambda function uses [AWS SDK for Pandas](https://aws-sdk-pandas.readthedocs.io/en/stable/) library as layer, so you need to pre-deployed this [application](https://serverlessrepo.aws.amazon.com/applications/us-east-1/336392948345/aws-sdk-pandas-layer-py3-11) into Lambda layer because Terraform doesn't support for this deployment. Then you retrieve ARN of the layer and replace this [variable](./environments/variables.tfvar#L11) by the ARN of layer
 
 
-### Configuring credentails in Terraform
+### Configuring credentials in Terraform
 
 After you create Service Principal and get credentials, you can export these credentialsto environement variables like this:
 
