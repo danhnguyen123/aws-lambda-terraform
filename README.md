@@ -94,8 +94,7 @@ Second, you need to grant AdministratorAccess permission for this User so Terraf
 
 ### Deploy AWS SDK for Pandas
 
-This Lambda function uses [AWS SDK for Pandas](https://aws-sdk-pandas.readthedocs.io/en/stable/) library as layer, so you need to pre-deployed this [application](https://serverlessrepo.aws.amazon.com/applications/us-east-1/336392948345/aws-sdk-pandas-layer-py3-11) into Lambda layer because Terraform doesn't support for this deployment. Then you retrieve ARN of the layer and replace this [variable](./environments/variables.tfvar#L11) by the ARN of layer
-
+This Lambda function uses [AWS SDK for Pandas](https://aws-sdk-pandas.readthedocs.io/en/stable/) library as layer, but this library is a large package and exceeds 250MB limit of layer if we put `awswrangler` into [requirements.txt](./src/requirements.txt) to create layer so you need to pre-deployed this [application](https://serverlessrepo.aws.amazon.com/applications/us-east-1/336392948345/aws-sdk-pandas-layer-py3-11) into Lambda layer because Terraform doesn't support for this deployment. Then you retrieve ARN of the layer and replace this [variable](./environments/variables.tfvar#L11) with the ARN of layer
 
 ### Configuring credentials in Terraform
 
