@@ -134,10 +134,10 @@ terraform validate
 
 ### Terraform Plan
 
-Plan resouces which will create by Terraform, we storage Terraform variable config in this [file](./environments/dev/variables.tfvarss) and export `planfile.tfplan` file
+Plan resouces which will create by Terraform, we storage Terraform variable config in this [file](./environments/dev/variables.tfvars) and export `planfile.tfplan` file
 
 ```bash
-terraform plan -out planfile.tfplan -var-file ../environments/dev/variables.tfvarss
+terraform plan -out planfile.tfplan -var-file ../environments/dev/variables.tfvars
 ```
 
 ### Terraform Apply
